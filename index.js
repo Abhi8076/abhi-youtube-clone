@@ -13,10 +13,6 @@ app.use(express.static(path.join(__dirname,'/client/build')));
 app.use(cors());
 app.use(express.json());
 
-app.get('*',function(req,res){
-  res.sendFile(path.join(__dirname+"/client/build/index.html"))
-});
-
 mongoose.set('strictQuery', false);
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -33,6 +29,10 @@ app.use('/api/user/register', userRegister);
 app.use('/api/user/login', userLogin);
 app.use('/api/creator', creator);
 app.use('/api/videos', videoRC);
+
+app.get('*',function(req,res){
+  res.sendFile(path.join(__dirname+"/client/build/index.html"))
+});
 
 app.listen(port, () => {
   console.log(`server started on port ${port}`);
